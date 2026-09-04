@@ -1,6 +1,6 @@
 ---
 name: revisao-critica-relatorio
-description: Revisão crítica linha-por-linha de relatórios científicos e artigos (rigor de lógico, gramático sênior e revisor de conferência de computação): decisões arbitrárias sem justificativa, afirmações sem fonte, lacunas de reprodutibilidade, perguntas que uma banca faria e o texto não responde, inconsistências internas, falácias lógicas e validade argumentativa, coesão e fluidez narrativa em português, e idiossincrasias de texto gerado por IA (travessão, antítese "X, não Y", tríades compulsivas, adjetivação vazia, conectivos clichê, densidade de parágrafo uniforme). Use sempre que o usuário pedir para revisar criticamente, auditar, "achar furos", checar a lógica/raciocínio do texto, deixar o texto mais fluente/fluido/natural, preparar para banca/prêmio, ou perguntar se a tese/argumentação/narrativa está forte, bem justificada ou pronta para submissão. Use também antes de considerar um relatório final ou artigo pronto para entrega.
+description: Revisão crítica linha-por-linha de relatórios científicos e artigos (rigor de lógico, gramático sênior e revisor de conferência de computação): decisões arbitrárias sem justificativa, afirmações sem fonte, lacunas de reprodutibilidade, perguntas que uma banca faria e o texto não responde, inconsistências internas, falácias lógicas e validade argumentativa, coesão e fluidez narrativa em português, idiossincrasias de texto gerado por IA (travessão, antítese "X, não Y", tríades compulsivas, adjetivação vazia, conectivos clichê, densidade de parágrafo uniforme), e força da tese como um todo (narrativa contexto→lacuna→problema→contribuição na Introdução, diferenciação explícita contra trabalhos relacionados, benchmarks contra o estado da arte real, cobertura das figuras, cenário de uso concreto, palavras-chave para indexação internacional, pontos cegos do autor). Use sempre que o usuário pedir para revisar criticamente, auditar, "achar furos", checar a lógica/raciocínio do texto, deixar o texto mais fluente/fluido/natural, preparar para banca/prêmio, ou perguntar se a tese/argumentação/narrativa está forte, bem justificada ou pronta para submissão. Use também antes de considerar um relatório final ou artigo pronto para entrega.
 ---
 
 # Revisão crítica de relatório científico
@@ -182,6 +182,74 @@ fluência antes disso desperdiça trabalho em texto que ainda vai mudar de núme
   humano experiente na área, não como uma lista de fatos verdadeiros concatenados por conectivos.
   Se ao ler em voz alta o texto soa "correto mas robótico", ainda não passou neste passo.
 
+## Passo 2d — força e narrativa da tese como um todo
+
+Distinto dos passos anteriores (que auditam frase/parágrafo/seção isolados): aqui a unidade de
+análise é o artigo inteiro como argumento único. Fazer esta passada depois do Passo 2c (rigor
+lógico-argumentativo local), antes do Passo 5 (fluidez).
+
+- **A tese central resiste a "e daí?".** Existe uma frase única, localizável no texto, que
+  resume a contribuição central? Se essa frase fosse removida, o restante do artigo ainda faria
+  sentido como conjunto coerente, ou viraria uma lista de resultados desconexos?
+- **Contexto → lacuna → problema → contribuição, na Introdução, nesta ordem e de forma
+  explícita.** Marcar linha a linha onde cada um desses quatro elementos aparece:
+  - *Contexto/importância*: por que esse tema importa, para quem, com que urgência — não
+    assumido, dito.
+  - *Lacuna*: o que a literatura/prática atual não resolve, nomeada com precisão (não "há
+    poucos estudos sobre X", mas "nenhum trabalho revisado reporta Y sob a condição Z").
+  - *Problema*: a pergunta de pesquisa específica que decorre da lacuna, não uma reformulação
+    genérica do tema.
+  - *Contribuição*: o que este trabalho especificamente entrega, em uma lista ou frase
+    enumerável, diferenciada do que já existe (não "avançamos o entendimento de X").
+  Se qualquer um dos quatro só aparece implícito ou espalhado por várias seções sem uma
+  âncora clara na Introdução, isso é um achado a reportar, não uma suposição a fazer por conta
+  própria — citar a lacuna real linha a linha.
+- **A lacuna é convincente, não apenas presente.** Não basta a lacuna existir no texto: ela
+  precisa convencer o leitor de que vale a pena resolver — evidência de custo/impacto de não
+  resolvê-la, ou de que tentativas anteriores esbarraram nela. Uma lacuna meramente descrita
+  ("nenhum trabalho fez X") é mais fraca que uma lacuna motivada ("a ausência de X causa Y,
+  como mostrado por Z").
+- **Diferenciação explícita da contribuição.** Para cada trabalho relacionado citado como
+  próximo/comparável, o texto precisa dizer clara e localizadamente o que este trabalho faz
+  diferente — não deixar para o leitor inferir por justaposição. "Diferente de X, nós fazemos Y"
+  é mais forte que citar X e Y lado a lado sem essa frase de ponte.
+- **Cenário de uso concreto.** Para leitores não familiarizados com o domínio da aplicação,
+  existe um exemplo tangível (não abstrato) de quando/onde/por quem essa contribuição seria
+  usada na prática? A ausência de um cenário concreto é uma fraqueza real para acessibilidade
+  do artigo fora do subcampo imediato — reportar como achado, não assumir que "fica implícito".
+- **Melhor benchmark/estado da arte disponível, não apenas um benchmark plausível.** Toda
+  comparação numérica contra trabalho relacionado precisa responder: esse é o resultado mais
+  forte/recente publicamente disponível para essa tarefa, ou existe um número melhor que o
+  texto não está enfrentando? Se a resposta não é verificável a partir do texto sozinho, isso é
+  uma lacuna de honestidade a reportar, não a assumir como resolvida.
+- **As figuras cobrem o que o texto alega, e são as mais fortes possíveis para o argumento.**
+  Para cada alegação central do texto que poderia ser mostrada visualmente, existe uma figura
+  correspondente? E, ao contrário, toda figura existente sustenta uma alegação central (nenhuma
+  é decorativa)? Uma figura ausente para o achado mais importante do trabalho é um ponto cego
+  sério — mais grave que uma figura existente com legenda fraca.
+- **Revisão sistemática vs. seleção de conveniência.** O Related Work reflete uma revisão
+  sistemática real (protocolo de busca declarado, critérios de inclusão/exclusão) ou é uma
+  seleção de referências convenientes ao argumento? Se não houve SLR formal, isso deve ser
+  nomeado como limitação honesta, nunca disfarçado de cobertura completa da literatura.
+- **Palavras-chave para indexação internacional.** As keywords declaradas (`\keywords{}` ou
+  equivalente) usam a terminologia que um pesquisador da área buscaria em bases indexadas
+  (IEEE Xplore, Scopus, ACM DL) — termos consolidados do subcampo, não sinônimos idiossincráticos
+  cunhados pelo próprio trabalho? Um termo técnico inventado no lugar do termo-padrão da área
+  reduz achabilidade internacional, mesmo sendo tecnicamente correto.
+- **Passo-a-passo do "como" está registrado, não só o "o quê".** Além de hardware/versões/seeds
+  (Passo 2, item 3): o processo de decisão em si está documentado — por que essa abordagem e
+  não outra considerada, em que ordem os experimentos/decisões aconteceram, o que foi tentado e
+  descartado? Um artigo pode ser numericamente reprodutível e ainda assim omitir a lógica do
+  processo que levou às escolhas finais.
+- **Limitações reais, nomeadas com honestidade, não genéricas.** "Mais estudos são necessários"
+  não é uma limitação real. Uma limitação real nomeia uma condição específica sob a qual o
+  resultado pode não se sustentar, e por quê — o mesmo padrão de honestidade epistêmica já usado
+  para achados que revertem o resultado principal do trabalho.
+- **Pontos cegos do autor: a pergunta que a autora não sabe responder.** Para cada seção,
+  formular explicitamente uma pergunta adversarial que um avaliador familiarizado com a área
+  faria e que não tem resposta localizável no texto atual — não é suficiente que a resposta
+  "exista na cabeça do autor"; se não está no texto, é um ponto cego a reportar nominalmente.
+
 ## Padrão-ouro de referência (não reinventar métrica que já existe)
 
 Antes de aceitar uma métrica ou vocabulário criado pelo próprio trabalho, verificar se a área já
@@ -215,3 +283,24 @@ existe e é acessível, costuma ser a primeira pergunta de um revisor familiariz
       dilema) sobrevive à reconstrução do silogismo implícito
 - [ ] Nenhuma claim é infalsificável ao ponto de nenhuma evidência plausível poder refutá-la
 - [ ] Lido em voz alta (mentalmente), nenhum parágrafo soa mecânico ou exige pausa para reler
+- [ ] Existe uma frase única e localizável que resume a tese central do trabalho
+- [ ] Introdução tem contexto/importância, lacuna, problema e contribuição explícitos, nesta
+      ordem, cada um localizável em linha específica (não implícito ou espalhado)
+- [ ] A lacuna convence, não apenas descreve ("nenhum trabalho fez X" é mais fraco que "a
+      ausência de X causa Y, como Z mostra")
+- [ ] Para cada trabalho relacionado próximo, há uma frase explícita de diferenciação
+      ("diferente de X, nós fazemos Y"), não apenas justaposição
+- [ ] Existe cenário de uso concreto para leitor não familiarizado com o domínio da aplicação
+- [ ] Toda comparação numérica contra a literatura usa o melhor/mais recente resultado
+      publicamente disponível, não apenas um número plausível
+- [ ] Toda alegação central tem figura correspondente; toda figura existente sustenta uma
+      alegação central (nenhuma decorativa)
+- [ ] Cobertura de literatura é revisão sistemática real ou está nomeada como seleção
+      não-sistemática (nunca disfarçada de completude)
+- [ ] Palavras-chave usam terminologia-padrão da área indexada internacionalmente (IEEE
+      Xplore/Scopus/ACM DL), não sinônimo idiossincrático cunhado pelo próprio trabalho
+- [ ] O "como" documenta o processo de decisão (por que essa abordagem, o que foi descartado),
+      não só hardware/versões/seeds
+- [ ] Toda limitação nomeada é específica e honesta ("mais estudos são necessários" não conta)
+- [ ] Para cada seção, existe ao menos uma pergunta adversarial cuja resposta não está
+      localizável no texto atual — reportada nominalmente como ponto cego
