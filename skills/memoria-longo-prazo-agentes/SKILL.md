@@ -1,6 +1,6 @@
 ---
 name: memoria-longo-prazo-agentes
-description: Guia de arquitetura para memória de longo prazo por usuário em agentes com LLM — distingue memória de histórico de conversa e de session state, apresenta a arquitetura memory stream → reflection → planning (validada empiricamente) e as armadilhas mais comuns (falha de retrieval, memória fabricada). Use quando o usuário perguntar como fazer um agente "lembrar" preferências entre sessões, estiver desenhando um sistema de memória persistente, ou confundir memória com histórico de chat/estado de sessão.
+description: Guia de arquitetura para memória de longo prazo por usuário em agentes com LLM — distingue memória de histórico de conversa e de session state, apresenta a arquitetura memory stream → reflection → planning e a paginação hierárquica MemGPT (ambas validadas empiricamente), e as armadilhas mais comuns (falha de retrieval, memória fabricada). Use quando o usuário perguntar como fazer um agente "lembrar" preferências entre sessões, estiver desenhando um sistema de memória persistente, tiver histórico que excede a janela de contexto do modelo, ou confundir memória com histórico de chat/estado de sessão.
 ---
 
 # Memória de longo prazo em agentes com LLM
@@ -46,6 +46,47 @@ Para o mecanismo de retrieval específico: o paper combina relevância (similari
 recência (eventos recentes pesam mais) e importância (uma pontuação de quão significativo é
 aquele evento) para decidir quais memórias trazer de volta ao contexto do modelo em cada
 momento — não é só top-k por similaridade pura.
+
+## Arquitetura complementar: paginação hierárquica (MemGPT)
+
+Enquanto memory stream→reflection→planning descreve O QUE fazer com memória (síntese em níveis
+crescentes de abstração), o paper "MemGPT: Towards LLMs as Operating Systems" (Packer, Wooders,
+Lin, Fang, Patil, Stoica, Gonzalez — UC Berkeley, arXiv:2310.08560) descreve COMO gerenciar
+fisicamente o que cabe no contexto do modelo — os dois são complementares, não concorrentes.
+
+**A analogia central**: o contexto fixo de um LLM é tratado como "memória principal" (RAM) num
+sistema operacional, e um armazenamento externo ilimitado como "disco". MemGPT usa function
+calls para deixar o próprio LLM mover dados entre os dois níveis — igual a paginação de memória
+virtual em SOs tradicionais.
+
+Três componentes do contexto principal (os "prompt tokens"):
+1. **System instructions** — somente leitura, explica ao modelo como usar o próprio sistema de
+   memória (quais functions existem, quando usá-las).
+2. **Working context** — bloco de tamanho fixo, leitura/escrita só via function call, guarda
+   fatos-chave sobre o usuário/persona ativa (equivalente funcional à "Memory" da tabela acima).
+3. **FIFO queue** — histórico rolante de mensagens recentes; quando o contexto se aproxima do
+   limite, um "queue manager" primeiro avisa o modelo ("memory pressure") para que ele salve o
+   que for importante em armazenamento externo antes que as mensagens antigas sejam removidas da
+   janela (e resumidas recursivamente num sumário, não simplesmente descartadas).
+
+Armazenamento externo (fora do contexto, acessado só via function call de busca paginada):
+- **Recall storage**: histórico completo de mensagens já processadas, buscável por texto.
+- **Archival storage**: base de conhecimento de longo prazo, tipicamente com busca vetorial.
+
+**Achado quantitativo forte** (Table 2 do paper, tarefa de "deep memory retrieval" — responder
+uma pergunta que só pode ser respondida com conhecimento de conversas 5 sessões atrás): GPT-4
+sozinho atinge 32,1% de acurácia; GPT-4 + MemGPT atinge **92,5%** — ganho de mais de 60 pontos
+percentuais. Em GPT-3.5 Turbo o ganho é de 38,7% para 66,9%. O mesmo padrão se replica numa
+tarefa sintética de busca aninhada chave-valor (nested key-value retrieval): modelos sem MemGPT
+caem a 0% de acurácia a partir de 2-3 níveis de aninhamento; MemGPT com GPT-4 mantém performance
+estável independente do número de níveis, porque consegue fazer múltiplas buscas paginadas em
+sequência via function calling em vez de depender de tudo estar simultaneamente no contexto.
+
+**Quando essa arquitetura vale o esforço**: quando o volume de histórico/conhecimento excede
+sistematicamente a janela de contexto do modelo em uso — não é necessária para agentes com poucas
+sessões curtas por usuário, onde o contexto já comporta tudo sem paginação. É mais relevante
+quanto menor a janela de contexto do modelo local em uso (o ganho relativo do paper é maior em
+modelos com contexto menor).
 
 ## Dois modos de captura de memória
 
