@@ -21,6 +21,7 @@ Para usar num projeto: copie a pasta da skill para `.claude/skills/<nome>/` dent
 | [`rag-multimodal`](skills/rag-multimodal/) | Checklist para adicionar RAG multimodal (texto+imagem) a um projeto: decisão de arquitetura caption-then-embed vs. CLIP, tabela de VLMs locais por hardware, e pegadinhas de ambiente conhecidas (Ollama + PyTorch no mesmo processo). |
 | [`slides-beamer-decisao-tecnica`](skills/slides-beamer-decisao-tecnica/) | Gera slides Beamer (.tex, Overleaf) narrando qualquer decisão técnica em 3 batidas — o que medimos, o que significou, o que decidimos — com números reais, nunca estimados. |
 | [`padrao-gerador-validador`](skills/padrao-gerador-validador/) | Guia de quando separar quem gera de quem valida em sistemas com LLM (nunca confiar em instrução de prompt para impor regra dura), com evidência quantitativa do paper AutoGen e do OpenAI Agents SDK. |
+| [`memoria-longo-prazo-agentes`](skills/memoria-longo-prazo-agentes/) | Arquitetura de memória de longo prazo por usuário em agentes com LLM: distingue memória de histórico de conversa e session state, apresenta memory stream → reflection → planning (validado empiricamente no paper Generative Agents) e as armadilhas mais comuns de retrieval e memória fabricada. |
 
 ## Licença
 
