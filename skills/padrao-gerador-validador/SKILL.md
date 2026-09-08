@@ -1,0 +1,79 @@
+---
+name: padrao-gerador-validador
+description: Guia de quando e como separar "quem gera/decide" de "quem valida/guarda" em sistemas com LLM — nunca confiar em instrução de prompt para fazer cumprir uma regra dura, preferir validação determinística ou um segundo agente crítico separado do gerador. Cita evidência real (paper AutoGen, OpenAI Agents SDK). Use quando o usuário perguntar se vale separar geração de validação em dois agentes/componentes, estiver desenhando um pipeline com LLM que precisa respeitar uma regra de segurança/negócio, ou quiser embasar essa decisão de arquitetura com fundamentação externa.
+---
+
+# Padrão gerador-validador (separar quem gera de quem valida)
+
+## O princípio
+
+Um LLM que gera algo (código, SQL, uma resposta, uma jogada) não deve ser o mesmo componente
+que decide se esse algo é válido — mesmo quando o prompt do gerador já pede explicitamente para
+"seguir a regra X". Instrução textual não é enforcement. Prefira, nessa ordem de preferência:
+
+1. **Validação determinística em código** quando a regra é verificável objetivamente (ex.:
+   "a query só pode ser SELECT", "o valor está dentro de um intervalo", "a jogada é permitida
+   pelas regras do jogo").
+2. **Um segundo agente/chamada de LLM separado, agindo como crítico**, quando a regra exige
+   julgamento que código puro não cobre (ex.: "essa resposta é factualmente sustentada pelo
+   contexto fornecido?").
+
+O motivo de nunca confiar só na instrução do gerador: o mesmo processo que decidiu gerar algo
+errado não tem motivo estrutural para reconhecer o próprio erro de forma confiável — ele já
+"acreditava" que a saída estava certa quando a produziu.
+
+## Evidência externa (não é só intuição de projeto)
+
+**Paper AutoGen** (Wu et al., Microsoft Research, arXiv:2308.08155) traz três estudos empíricos
+diretamente relevantes:
+
+- **Separar gerador de validador em dois agentes distintos** (em vez de um agente único fazendo
+  as duas coisas) aumentou F1 de detecção de código inseguro em **+8% (GPT-4) e +35%
+  (GPT-3.5-turbo)** num experimento de geração de código com checagem de segurança (estudo
+  "OptiGuide"/A4 do paper). O ganho é maior justamente no modelo mais fraco — sugerindo que a
+  separação compensa mais ainda quando o modelo individual é menos confiável.
+- **Um "grounding agent"** (um segundo agente injetando conhecimento de senso comum/regras do
+  domínio quando o sistema começa a repetir erros) trouxe **+15% de performance** num ambiente
+  de tomada de decisão sequencial (estudo ALFWorld/A3 do paper) — mesmo padrão de "agente crítico
+  externo corrigindo o principal".
+- **Removendo um validador determinístico** (um "board agent" que checava se jogadas de xadrez
+  eram legais) e substituindo por só uma instrução textual pedindo jogadas legais, o sistema
+  quebrou com jogadas ilegais (estudo de xadrez conversacional/A6 do paper) — prova experimental
+  direta de que instrução de prompt sozinha não é suficiente para impor uma regra dura, mesmo
+  quando a regra é simples e o modelo é competente.
+
+**OpenAI Agents SDK** (docs oficiais) formaliza o mesmo padrão como "Guardrails": validação de
+entrada/saída que roda em paralelo à execução do agente, "falhando rápido" quando a checagem não
+passa — é a mesma ideia descrita como um recurso de primeira classe do SDK, não uma prática
+improvisada.
+
+Três fontes independentes (paper acadêmico com dados quantitativos, SDK de produção, e a
+observação recorrente em sistemas reais que caem nesse padrão de forma orgânica) convergem no
+mesmo princípio — o que fortalece bastante o argumento a favor dele numa decisão de arquitetura
+ou numa justificativa técnica escrita.
+
+## Como aplicar
+
+1. **Identifique as regras duras do seu sistema** — o que NUNCA pode acontecer, independente do
+   que o LLM "decidir" (ex.: nunca executar uma query que não seja leitura, nunca ultrapassar um
+   limite de segurança conhecido, nunca misturar dados de fontes incompatíveis).
+2. **Para cada regra dura, pergunte: isso é verificável por código puro?** Se sim, implemente
+   como checagem determinística ANTES de qualquer chamada cara de LLM — barato, rápido, e sem
+   ambiguidade. Não delegue essa checagem a um prompt, mesmo que pareça mais simples de escrever.
+3. **Para julgamentos que exigem entendimento de linguagem/contexto** (não uma regra dura
+   binária), considere um segundo agente separado do gerador, cujo único trabalho é avaliar a
+   saída do primeiro — não peça ao mesmo agente para gerar e se auto-avaliar na mesma chamada.
+4. **Dê precedência à camada determinística sobre o veredito do LLM** quando as duas discordarem
+   — se uma regra fixa diz "isso é crítico" e o LLM diz "está tudo bem", a regra fixa vence. Um
+   LLM pode discordar de uma leitura obviamente correta por razões que não têm relação com a
+   regra em si.
+
+## Não fazer
+
+- Não assuma que "o prompt já pede pra fazer certo" é suficiente para uma regra que realmente
+  importa — trate isso como uma sugestão ao modelo, não como enforcement.
+- Não implemente o segundo agente/validador como "mais uma etapa do mesmo prompt" — precisa ser
+  uma chamada/processo separado para ter o efeito de crítica independente que a evidência mostra.
+- Não pule a validação determinística achando que o segundo agente (LLM) já cobre o caso — LLM
+  crítico ainda pode errar; regra determinística é o piso de segurança quando a regra é
+  objetivamente verificável.
