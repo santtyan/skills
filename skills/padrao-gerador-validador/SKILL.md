@@ -1,6 +1,6 @@
 ---
 name: padrao-gerador-validador
-description: Guia de quando e como separar "quem gera/decide" de "quem valida/guarda" em sistemas com LLM — nunca confiar em instrução de prompt para fazer cumprir uma regra dura, preferir validação determinística ou um segundo agente crítico separado do gerador. Cita evidência real (paper AutoGen, OpenAI Agents SDK). Use quando o usuário perguntar se vale separar geração de validação em dois agentes/componentes, estiver desenhando um pipeline com LLM que precisa respeitar uma regra de segurança/negócio, ou quiser embasar essa decisão de arquitetura com fundamentação externa.
+description: Guia de quando e como separar "quem gera/decide" de "quem valida/guarda" em sistemas com LLM — nunca confiar em instrução de prompt para fazer cumprir uma regra dura, preferir validação determinística ou um segundo agente crítico separado do gerador. Cita evidência real (paper AutoGen, paper AgentBench, OpenAI Agents SDK). Use quando o usuário perguntar se vale separar geração de validação em dois agentes/componentes, estiver desenhando um pipeline com LLM que precisa respeitar uma regra de segurança/negócio, ou quiser embasar essa decisão de arquitetura com fundamentação externa.
 ---
 
 # Padrão gerador-validador (separar quem gera de quem valida)
@@ -25,7 +25,10 @@ errado não tem motivo estrutural para reconhecer o próprio erro de forma confi
 ## Evidência externa (não é só intuição de projeto)
 
 **Paper AutoGen** (Wu et al., Microsoft Research, arXiv:2308.08155) traz três estudos empíricos
-diretamente relevantes:
+diretamente relevantes. Nota: o AutoGen como *framework* entrou em modo de manutenção em 2026
+(sucedido pelo Microsoft Agent Framework) — a citação aqui é do paper acadêmico e dos dados que
+ele reporta, que continuam válidos independente do ciclo de vida do produto; não é uma
+recomendação de adotar o framework AutoGen em produção hoje.
 
 - **Separar gerador de validador em dois agentes distintos** (em vez de um agente único fazendo
   as duas coisas) aumentou F1 de detecção de código inseguro em **+8% (GPT-4) e +35%
@@ -42,12 +45,26 @@ diretamente relevantes:
   direta de que instrução de prompt sozinha não é suficiente para impor uma regra dura, mesmo
   quando a regra é simples e o modelo é competente.
 
+**Paper AgentBench** (Liu et al., Tsinghua/Ohio State/UC Berkeley, arXiv:2308.03688, ICLR 2024)
+testa 29 LLMs (incluindo GPT-4 e Claude) como agentes autônomos em 8 ambientes reais distintos
+(sistema operacional, banco de dados, grafo de conhecimento, jogos, navegação web). Duas das
+cinco categorias de causa de falha que o paper define e mede diretamente são **"Invalid Format"**
+(o agente não segue o formato de saída instruído) e **"Invalid Action"** (o agente segue o
+formato, mas escolhe uma ação inválida) — mesmo em modelos de ponta. A conclusão central do
+paper nomeia explicitamente **"poor instruction following"** como um dos principais obstáculos
+para agentes LLM utilizáveis na prática. É uma terceira fonte independente, e a mais ampla em
+escala (29 modelos, 8 ambientes reais, não um único sistema), mostrando que mesmo os modelos mais
+fortes disponíveis não seguem instrução de formato/ação de forma confiável só por serem
+instruídos a isso — reforça que validação externa ao gerador não é uma cautela excessiva, é
+proporcional ao problema real medido.
+
 **OpenAI Agents SDK** (docs oficiais) formaliza o mesmo padrão como "Guardrails": validação de
 entrada/saída que roda em paralelo à execução do agente, "falhando rápido" quando a checagem não
 passa — é a mesma ideia descrita como um recurso de primeira classe do SDK, não uma prática
 improvisada.
 
-Três fontes independentes (paper acadêmico com dados quantitativos, SDK de produção, e a
+Quatro fontes independentes (dois papers acadêmicos com dados quantitativos — um focado num
+padrão de arquitetura, outro numa avaliação ampla de capacidade —, um SDK de produção, e a
 observação recorrente em sistemas reais que caem nesse padrão de forma orgânica) convergem no
 mesmo princípio — o que fortalece bastante o argumento a favor dele numa decisão de arquitetura
 ou numa justificativa técnica escrita.
