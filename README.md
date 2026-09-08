@@ -13,6 +13,7 @@ Para usar num projeto: copie a pasta da skill para `.claude/skills/<nome>/` dent
 | Skill | O que faz |
 |---|---|
 | [`revisao-critica-relatorio`](skills/revisao-critica-relatorio/) | Revisão crítica linha-por-linha de relatórios científicos e textos técnicos: detector determinístico de traços de escrita por IA (travessão, antítese, adjetivo vazio, conectivo clichê, densidade de parágrafo), rigor de gramático sênior em português, validação de cadeia lógica premissa→evidência→conclusão e falácias comuns, e um passo de reescrita para fluidez narrativa extrema. |
+| [`refatorar-organizar-repositorio`](skills/refatorar-organizar-repositorio/) | Audita um repositório inteiro em busca de dívida técnica estrutural (arquivos órfãos, lógica duplicada entre módulos, nomenclatura inconsistente, organização de pastas confusa, dependências não usadas), prioriza os achados por impacto x custo e aplica refatoração com comportamento preservado, em mudanças pequenas e reversíveis com baseline recuperável. |
 
 ## Licença
 
