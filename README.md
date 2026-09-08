@@ -14,6 +14,7 @@ Para usar num projeto: copie a pasta da skill para `.claude/skills/<nome>/` dent
 |---|---|
 | [`revisao-critica-relatorio`](skills/revisao-critica-relatorio/) | Revisão crítica linha-por-linha de relatórios científicos e textos técnicos: detector determinístico de traços de escrita por IA (travessão, antítese, adjetivo vazio, conectivo clichê, densidade de parágrafo), rigor de gramático sênior em português, validação de cadeia lógica premissa→evidência→conclusão e falácias comuns, e um passo de reescrita para fluidez narrativa extrema. |
 | [`refatorar-organizar-repositorio`](skills/refatorar-organizar-repositorio/) | Audita um repositório inteiro em busca de dívida técnica estrutural (arquivos órfãos, lógica duplicada entre módulos, nomenclatura inconsistente, organização de pastas confusa, dependências não usadas), prioriza os achados por impacto x custo e aplica refatoração com comportamento preservado, em mudanças pequenas e reversíveis com baseline recuperável. |
+| [`auditar-scripts-orfaos`](skills/auditar-scripts-orfaos/) | Classifica cada script standalone (com ponto de entrada de execução direta) de um repositório em útil, órfão, arquivado intencionalmente ou setup one-shot, cruzando evidência de chamada real (import, subprocess, comando documentado) com sinais de auto-abandono no próprio código (docstring desatualizado, paths hardcoded de máquina específica). Não remove nada sozinha — entrega o diagnóstico para decisão humana. |
 
 ## Licença
 
