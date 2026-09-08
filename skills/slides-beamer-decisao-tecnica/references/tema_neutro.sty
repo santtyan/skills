@@ -1,0 +1,31 @@
+% Tema Beamer neutro — troque estas cores pela identidade visual do seu projeto.
+% Incluir com \usepackage{tema_neutro} ou colar o conteúdo direto no preâmbulo se
+% o Overleaf não aceitar arquivo extra.
+
+\definecolor{corprincipal}{HTML}{1F4E79}
+\definecolor{corsecundaria}{HTML}{2E75B6}
+\definecolor{coracento}{HTML}{C00000}
+\definecolor{corescura}{HTML}{0B2545}
+
+\setbeamercolor{title}{fg=corprincipal}
+\setbeamercolor{frametitle}{fg=white,bg=corprincipal}
+\setbeamercolor{structure}{fg=corprincipal}
+\setbeamercolor{block title}{fg=white,bg=corescura}
+\setbeamercolor{block body}{bg=corprincipal!5}
+\setbeamercolor{alerted text}{fg=coracento}
+\setbeamercolor{item}{fg=corprincipal}
+
+% Bloco de "número medido" — usar para destacar uma métrica real (nunca estimada)
+\newenvironment{numerobloco}[1]{%
+  \begin{block}{#1}
+}{%
+  \end{block}
+}
+
+% Bloco de "decisão tomada" — usar para o momento de virada da narrativa
+% (ex.: "medimos, não compensava isolado, decidimos mudar por outro motivo")
+\newenvironment{decisaobloco}[1]{%
+  \begin{alertblock}{#1}
+}{%
+  \end{alertblock}
+}

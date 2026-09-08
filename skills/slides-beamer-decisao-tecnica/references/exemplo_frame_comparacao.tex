@@ -1,0 +1,32 @@
+% Exemplo ILUSTRATIVO de frame de comparação com narrativa — copiar a estrutura, não o
+% conteúdo (números e decisão abaixo são fictícios, só para mostrar o formato).
+% Princípio: cada frame conta uma HISTÓRIA de 3 batidas —
+% (1) o que medimos, (2) o que isso significou, (3) o que decidimos e por quê —
+% nunca só uma tabela solta sem a decisão que ela gerou.
+
+\begin{frame}{Escolha de banco de dados: Postgres vs. MongoDB}
+  \begin{numerobloco}{O que medimos (benchmark de carga, 10k escritas/leituras)}
+    \begin{center}
+    \begin{tabular}{lccc}
+      \toprule
+      \textbf{Métrica} & \textbf{Postgres} & \textbf{MongoDB} & \textbf{Postgres + índice extra} \\
+      \midrule
+      Latência p50 (ms) & 12   & 9    & 8    \\
+      Latência p99 (ms) & 45   & 38   & \alert{22}    \\
+      Consistência forte & Sim  & Não  & Sim  \\
+      \bottomrule
+    \end{tabular}
+    \end{center}
+  \end{numerobloco}
+
+  \pause
+  \textbf{O que isso significou:} o ganho de latência do MongoDB vinha da ausência de
+  consistência forte, não de uma vantagem estrutural do banco — replicando o mesmo índice
+  extra no Postgres, a diferença de p99 \alert{some} e ainda mantemos consistência forte.
+
+  \pause
+  \begin{decisaobloco}{O que decidimos}
+    Ficamos com Postgres + índice extra: a latência empata com a melhor opção, e não abrimos
+    mão de consistência forte, que é um requisito do domínio (transações financeiras).
+  \end{decisaobloco}
+\end{frame}
