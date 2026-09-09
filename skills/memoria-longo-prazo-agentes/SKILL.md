@@ -141,3 +141,11 @@ Memória (curto e longo prazo) é citada como um dos benefícios centrais de fra
 orquestração de agentes como LangGraph — se o seu projeto já usa `migrar-para-langchain` ou
 `roadmap-rag-survey` deste repositório, memória de longo prazo por usuário é uma extensão
 natural do mesmo runtime, não um sistema à parte.
+
+## Leituras relacionadas (ainda não cobertas em detalhe nesta skill)
+
+Arquiteturas de memória citadas na literatura como desenvolvimento posterior a MemGPT/Generative
+Agents, ainda não lidas/resumidas aqui — vale expandir esta skill quando forem exploradas:
+G-Memory, A-Mem, Memory-R1. O padrão comum entre esses nomes costuma ser refinar como a memória é
+estruturada/indexada (não só onde ela mora), mas isso não foi verificado em detalhe ainda —
+tratar como pista de leitura, não como fato já confirmado.

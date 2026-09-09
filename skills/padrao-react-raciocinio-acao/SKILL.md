@@ -70,3 +70,38 @@ raciocínio+ação) já coberto por outras skills deste repositório sobre migra
 orquestração de agente (LangGraph e equivalentes) e sobre separação gerador/validador. Se você já
 está implementando um desses padrões, ReAct é a referência teórica e a fonte da evidência
 quantitativa que sustenta a decisão de design.
+
+## Regra permanente: toda replicação entrega três artefatos
+
+Ao replicar um agente ReAct (ou qualquer variante) sobre uma tarefa de benchmark, o resultado
+esperado nunca é só "rodou e funcionou" — são sempre **três artefatos, nunca menos**:
+
+1. **Código** — a implementação do agente em si (o laço Thought/Action/Observation, as tools).
+2. **Trace** — um registro estruturado por execução (não texto livre): cada passo com
+   thought/action/observation, modelo+versão usados, tokens/latência, e — se possível — as
+   relações entre passos (o que dependeu do quê). Formato sugerido: JSON/JSONL com campos
+   espelhando a convenção OpenTelemetry GenAI (`gen_ai.request.model`,
+   `gen_ai.usage.input_tokens` etc) mais uma camada semântica de proveniência
+   (SUPPORT/DERIVE/DEPEND_ON/CONTRADICT/INVALIDATE entre passos) — OTel puro não é suficiente
+   para pesquisa em agentes, falta exatamente essa camada.
+3. **Relatório de replicação** — um resumo legível por humano da coleção de execuções: modelo
+   e versão, prompt usado, tools disponíveis, dependências com versão, custo total/por execução,
+   taxa de sucesso, distribuição de modos de falha. Um formato de referência é o "Rollout Card"
+   (por analogia a Model Cards): resolve o problema de que um agente acopla modelo + prompt +
+   tools + retry logic + ambiente, e mudar qualquer peça muda o resultado medido sem que isso
+   fique registrado em lugar nenhum.
+
+**Por quê**: um resultado sem trace não é resultado — não dá para saber SE ou POR QUE algo
+funcionou. Um trace sem relatório não é comunicável — ninguém lê JSONL bruto para entender o
+que aconteceu. Os três juntos são o que torna uma replicação auditável e comparável contra uma
+tentativa futura (mesmo modelo? mesmo prompt? o que mudou?).
+
+## Leituras relacionadas (ainda não cobertas em detalhe nesta skill)
+
+Duas linhas de trabalho citadas na literatura como evolução/aplicação direta do padrão ReAct,
+ainda não lidas/resumidas aqui — vale expandir esta skill quando forem exploradas:
+- **Reflexion** — adiciona um passo explícito de auto-crítica verbal entre tentativas, usando o
+  próprio texto da falha anterior como "memória" de curto prazo para a próxima tentativa.
+- **SWE-agent (ACI — Agent-Computer Interface)** — aplica o ciclo pensamento-ação a tarefas de
+  engenharia de software real, com foco em desenhar a interface entre agente e ambiente
+  (comandos, formato de observação) como parte do problema, não só o raciocínio em si.

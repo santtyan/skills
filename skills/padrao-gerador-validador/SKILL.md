@@ -85,6 +85,19 @@ ou numa justificativa técnica escrita.
    LLM pode discordar de uma leitura obviamente correta por razões que não têm relação com a
    regra em si.
 
+## Nota sobre o debate mais amplo de "vale a pena ter múltiplos agentes"
+
+Existe uma tensão pública e sem árbitro definido na literatura entre uma posição cética
+("Don't Build Multi-Agents" — o argumento de que a maior parte dos casos não precisa de múltiplos
+agentes e a complexidade extra raramente se paga) e uma posição mais favorável, defendida
+publicamente por fornecedores de frameworks de orquestração multiagente como a LangChain. Esta
+skill não toma partido nesse debate mais amplo — o padrão gerador-validador aqui documentado é
+um caso específico e mais restrito (separar quem gera de quem checa uma regra), não um argumento
+geral a favor de arquiteturas multiagente complexas. A regra prática de `padrao-react-
+raciocinio-acao` e da disciplina experimental de projetos de pesquisa em agentes se aplica aqui
+também: qualquer decisão de ir para múltiplos agentes deveria vir acompanhada de comparação
+contra um baseline de agente único, a custo equivalente — não assumida como melhoria automática.
+
 ## Não fazer
 
 - Não assuma que "o prompt já pede pra fazer certo" é suficiente para uma regra que realmente
