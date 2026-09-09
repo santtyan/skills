@@ -25,6 +25,8 @@ Para usar num projeto: copie a pasta da skill para `.claude/skills/<nome>/` dent
 | [`tool-calling-multiframework`](skills/tool-calling-multiframework/) | Boas práticas de design de tool/function calling através de provedores (OpenAI, Anthropic) e frameworks de agente: schema e strict mode, deferred loading para catálogos grandes, client vs. server tools. |
 | [`observability-llm-opentelemetry`](skills/observability-llm-opentelemetry/) | Guia de quando/como instrumentar um pipeline de LLM com OpenTelemetry como alternativa vendor-neutral e self-hosted a plataformas proprietárias de observability. |
 | [`padrao-react-raciocinio-acao`](skills/padrao-react-raciocinio-acao/) | O paradigma ReAct (raciocínio e ação intercalados) para reduzir alucinação e melhorar tarefas de decisão, com evidência quantitativa do paper original (Yao et al., ICLR 2023). |
+| [`esquema-de-trace-agentes`](skills/esquema-de-trace-agentes/) | Padrão-ouro para desenhar o esquema de trace de um agente com LLM: quando OpenTelemetry GenAI basta e quando falta a camada semântica de proveniência entre passos, e como estruturar um trace JSONL portável entre frameworks. |
+| [`replicacao-experimento-agente`](skills/replicacao-experimento-agente/) | Protocolo de replicação de experimentos com agente: os três artefatos obrigatórios (código, trace, relatório), record-replay de chamadas externas, pin de versão, ablação por flag, e a regra de baseline justo entre agente único e multiagente. |
 
 ## Licença
 
