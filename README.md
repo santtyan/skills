@@ -29,6 +29,7 @@ Para usar num projeto: copie a pasta da skill para `.claude/skills/<nome>/` dent
 | [`esquema-de-trace-agentes`](skills/esquema-de-trace-agentes/) | Padrão-ouro para desenhar o esquema de trace de um agente com LLM: composição de OpenTelemetry GenAI, estrutura de log de avaliação Inspect AI, Rollout Cards e a camada semântica de proveniência (7 relações tipadas) entre passos. |
 | [`replicacao-experimento-agente`](skills/replicacao-experimento-agente/) | Protocolo de replicação de experimentos com agente (7 disciplinas com citação formal): os três artefatos obrigatórios (código, trace, relatório), record-replay de chamadas externas, pin de versão, custo como métrica primária, ablação por flag, baseline justo entre agente único e multiagente, manifesto de omissões e variância. |
 | [`slide-progresso-sessao`](skills/slide-progresso-sessao/) | Gera um slide Beamer panorâmico de progresso de um período (várias frentes de trabalho, não uma decisão isolada) — conquistas mensuráveis, decisões com o porquê, métricas com contexto, riscos com indicador de status, com autocrítica adversarial e revisão gramatical obrigatórias antes de considerar pronto. |
+| [`tema-cerise-pptx`](skills/tema-cerise-pptx/) | Aplica o tema visual institucional do grupo CERISE (UFG) a um deck PowerPoint gerado via pptxgenjs — logos, cor exata do título e padrão de layout já prontos, extraídos e validados a partir de apresentações reais do grupo, sem precisar re-extrair nada de um .pptx de referência. |
 
 ## Licença
 
