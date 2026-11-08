@@ -59,9 +59,6 @@ Antes de executar qualquer comando de conexão ou configuração de cliente:
 - [ ] O usuário vai colar uma string de conexão com senha? → **Avisar para não fazer isso no chat.**
 - [ ] A ação vai persistir credenciais em arquivo de histórico do shell? → **Avisar.**
 
-## Incidente de referência
+## Por que esta regra existe
 
-Em 08/11/2026, no projeto `cerise-ufg/harbor`, o arquivo `.env.livemes` foi lido com `Read` para configurar o DBeaver. As credenciais do LiveMES (IP, usuário e senhas MySQL/PostgreSQL) trafegaram pela API da Anthropic em conta pessoal sem Zero Data Retention — violação do termo de confidencialidade da HarboR. As senhas precisaram ser trocadas.
-
-**Causa raiz:** o assistente assumiu que precisava buscar os dados em vez de pedir ao usuário.
-**Correção:** sempre pedir ao usuário que forneça só o dado mínimo necessário, nunca ler o arquivo.
+Credenciais lidas acidentalmente durante uma sessão de IA trafegam pela API do provedor — em contas pessoais sem Zero Data Retention, isso pode violar termos de confidencialidade de projetos com dados industriais sensíveis. A regra acima evita esse risco completamente.
