@@ -30,6 +30,7 @@ Para usar num projeto: copie a pasta da skill para `.claude/skills/<nome>/` dent
 | [`replicacao-experimento-agente`](skills/replicacao-experimento-agente/) | Protocolo de replicação de experimentos com agente (7 disciplinas com citação formal): os três artefatos obrigatórios (código, trace, relatório), record-replay de chamadas externas, pin de versão, custo como métrica primária, ablação por flag, baseline justo entre agente único e multiagente, manifesto de omissões e variância. |
 | [`slide-progresso-sessao`](skills/slide-progresso-sessao/) | Gera um slide Beamer panorâmico de progresso de um período (várias frentes de trabalho, não uma decisão isolada) — conquistas mensuráveis, decisões com o porquê, métricas com contexto, riscos com indicador de status, com autocrítica adversarial e revisão gramatical obrigatórias antes de considerar pronto. |
 | [`tema-cerise-pptx`](skills/tema-cerise-pptx/) | Aplica o tema visual institucional do grupo CERISE (UFG) a um deck PowerPoint gerado via pptxgenjs — logos, cor exata do título e padrão de layout já prontos, extraídos e validados a partir de apresentações reais do grupo, sem precisar re-extrair nada de um .pptx de referência. |
+| [`proteger-credenciais`](skills/proteger-credenciais/) | Auditoria de segurança antes de qualquer ação que possa expor credenciais ou chaves privadas — ler arquivos sensíveis, configurar clientes de banco (DBeaver, pgAdmin) ou VPN (WireGuard). Nunca lê arquivos `.env*`, `*.conf`, `*.pem` ou similares; orienta o usuário a fornecer só o campo mínimo necessário. |
 
 ## Licença
 
