@@ -142,6 +142,20 @@ Se um comentário ou corpo ficou errado (ex.: nome trocado, divisão de trabalho
   ```
   Para achar o ID do comentário: `gh api repos/<owner>/<repo>/issues/<numero>/comments --jq '.[] | {id, body: .body[0:60]}'`.
 
+## Se for mexer no board de GitHub Projects
+
+Mover uma issue de coluna/status no board, ou ler o board via CLI, exige o escopo `project` (ou
+`read:project` para só leitura) no token do `gh`. O login padrão (`gh auth login`) não inclui esse
+escopo — tentar usar `gh project` ou os campos de Projects sem ele falha com
+`your authentication token is missing required scopes [read:project]`. Para resolver:
+
+```bash
+gh auth refresh -s project,read:project
+```
+
+Isso também é interativo (abre navegador com código de dispositivo), então peça ao usuário para rodar
+no próprio terminal se você estiver operando sem navegador disponível.
+
 ## Checklist antes de considerar a issue pronta
 
 - [ ] O corpo tem objetivo claro em 1-3 frases, sem jargão desnecessário?
