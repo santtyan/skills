@@ -100,6 +100,39 @@ precisa de mais uma rodada de ajuste (buscar a fonte que falta, reescrever a fra
 a limitação em vez de escondê-la) antes de considerar fechado. Não pular esta etapa achando que o
 conteúdo "parece bom" — o objetivo é achar o furo antes que a audiência ache.
 
+## Explicar um mecanismo técnico sob um diagrama (texto de apoio em duas camadas)
+
+Quando um frame tem um diagrama (arquitetura, pipeline, fluxo de dados) e o mecanismo por trás de
+um bloco é complexo demais para caber numa frase só, resistir à tentação de comprimir tudo numa
+única sentença densa — isso produz texto que soa técnico mas não se entende numa leitura. Usar
+duas camadas em vez de uma frase só:
+
+1. **Linha-resumo por bloco do diagrama**, com o mesmo nome do bloco (ex. "Ponte de ida.", "Rastreio.")
+   — uma frase curta, o essencial de entrada→ação→saída, para quem só quer acompanhar o diagrama.
+2. **Parágrafo narrativo menor** (fonte reduzida, uma cor mais discreta), abaixo da lista de
+   resumos, que desenvolve cada mecanismo com o espaço que ele precisa. Dentro desse parágrafo,
+   seguir sempre a ordem **problema → critério/solução → por que esse critério sozinho não
+   basta → critério adicional**, nunca despejar as três ideias na mesma frase. Cada ideia nova
+   (um novo "porquê", uma nova condição) começa frase nova — uma frase que tenta carregar duas
+   relações causais ao mesmo tempo ("A acontece porque B, o que faz C, então D") é sinal de que
+   precisa quebrar em duas.
+3. Usar um **exemplo numérico concreto** sempre que o critério envolver uma comparação (ex. "dava
+   para andar essa distância nesse tempo? 2 m em 1 s, sim; 20 m, não") — um número de referência
+   ancora a explicação muito melhor que só a regra abstrata.
+4. Ao escrever sobre um mecanismo que acopla dois sistemas (ex. uma "ponte" que traduz formato
+   entre dois pipelines), separar sempre a **mecânica** (o que exatamente é trocado/convertido, e
+   como a correspondência é feita) da **consequência** (o que isso permite, por que o outro lado
+   não percebe a mudança) — são duas frases, não uma só.
+5. Evitar terceira pessoa estranha ao descrever o próprio trabalho do autor do slide dentro de um
+   texto narrativo (ex. não escrever "o detector do Yan" quando quem apresenta é o próprio Yan) —
+   mas manter a atribuição de autoria nos **rótulos visuais** do diagrama (nome da pessoa na caixa
+   ou faixa colorida), que cumprem função diferente (dizer quem fez o quê para a plateia) da do
+   texto corrido.
+6. Depois de escrever, reler perguntando: "um leitor que nunca viu o diagrama entenderia este
+   parágrafo sozinho?" — se a resposta depende de uma referência vaga tipo "essa mesma lista" ou
+   "no lugar certo" sem antecedente claro na frase anterior, reescrever com o substantivo explícito
+   em vez do pronome.
+
 ## Revisão gramatical e de fluência (passo final, separado do de conteúdo)
 
 Depois do conteúdo técnico e da autocrítica estarem resolvidos, uma passada final revisando
